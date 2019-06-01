@@ -30,7 +30,8 @@
     "!/tests/",
     "!/coverage/",
     "!/docs/",
-    "!/script/"
+    "!/script/",
+    "!/cached-package.json"
   ],
   "publishConfig": {
     "access": "restricted",
@@ -42,7 +43,9 @@
     "npm": "6.x.x"
   },
   "scripts": {
-    "test": "standard && jest --coverage"
+    "test": "standard && jest --coverage",
+    "prepack": "node script/prepack-cleanse-pkg.js",
+    "postpack": "node script/postpack-restore-pkg.js"
   },
   "dependencies": {
     "@octokit/rest": "^15.18.1",
