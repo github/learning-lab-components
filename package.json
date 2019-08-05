@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/github/learning-lab-components/issues"
   },
-  "main": "./index.js",
+  "main": "./lib/src/index.js",
   "files": [
     "**/*",
     "!/.git/",
@@ -42,8 +42,8 @@
   },
   "scripts": {
     "build": "rimraf lib && tsc -p tsconfig.json",
-    "action:init": "node script/create-new-action.js",
-    "doc": "node script/generate-action-docs.js",
+    "action:init": "node ./lib/src/script/create-new-action.js",
+    "doc": "node ./lib/src/script/generate-action-docs.js",
     "test": "standard && jest --coverage"
   },
   "dependencies": {

@@ -1,5 +1,5 @@
 const createLabel = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('createLabel', () => {
   let context

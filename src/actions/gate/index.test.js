@@ -1,6 +1,6 @@
 const gate = require('.')
 const operations = require('./operations')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('gate', () => {
   let context

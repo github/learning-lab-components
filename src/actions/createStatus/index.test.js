@@ -1,5 +1,5 @@
 const createStatus = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('createStatus', () => {
   let context

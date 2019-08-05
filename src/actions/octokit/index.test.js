@@ -1,5 +1,5 @@
 const octokit = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('octokit', () => {
   let context

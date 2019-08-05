@@ -1,5 +1,5 @@
 const closeIssue = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('closeIssue', () => {
   let context

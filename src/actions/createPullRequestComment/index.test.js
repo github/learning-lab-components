@@ -1,7 +1,7 @@
 const nock = require('nock')
 const { GitHubAPI } = require('probot/lib/github')
 const createPullRequestComment = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('createPullRequestComment', () => {
   let context, nocked

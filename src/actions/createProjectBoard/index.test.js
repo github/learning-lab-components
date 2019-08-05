@@ -1,5 +1,5 @@
 const createProjectBoard = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('createProjectBoard', () => {
   let context

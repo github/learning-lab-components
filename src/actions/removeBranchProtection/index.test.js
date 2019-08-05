@@ -1,5 +1,5 @@
 const removeBranchProtection = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('removeBranchProtection', () => {
   let context

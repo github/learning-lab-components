@@ -120,12 +120,12 @@ async function createAction () {
   // Collect answers
   const action = await getActionMetadata()
 
-  const baseDir = path.join(__dirname, '..', 'actions', action.name)
+  const baseDir = path.join(__dirname, `../src/actions/${action.name}`)
   try {
     console.info(`Creating new action directory "${baseDir}"...`)
     await mkdir(baseDir)
   } catch (err) {
-    if (err.code === 'EEXIST') {
+    if (err.code === 'EXIST') {
       console.error(`Directory already exists: "${baseDir}"`)
       process.exit(1)
     }
@@ -150,6 +150,7 @@ async function createAction () {
   )
 
   console.info('Creating "README.md"...')
+  console.log('__dirname', __dirname)
   const { status, signal, error } =
     spawnSync(
       process.execPath,
@@ -161,7 +162,7 @@ async function createAction () {
   if (status !== 0) {
     console.error(`Failed to generate README.md!
 Exited with status ${status}, signal ${signal}, error:
-${error.stack}`
+${error}`
     )
     process.exit(1)
   }

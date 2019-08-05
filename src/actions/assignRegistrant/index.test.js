@@ -1,5 +1,5 @@
 const assignRegistrant = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('assignRegistrant', () => {
   let context

@@ -1,5 +1,5 @@
 const createFile = require('.')
-const mockContext = require('../../../tests/mockContext')
+const mockContext = require('../../tests/mockContext')
 
 describe('createFile', () => {
   let context
