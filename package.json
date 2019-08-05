@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/github/learning-lab-components/issues"
   },
-  "main": "index.js",
+  "main": "./index.js",
   "files": [
     "**/*",
     "!/.git/",
@@ -41,6 +41,7 @@
     "npm": "6.x.x"
   },
   "scripts": {
+    "build": "rimraf lib && tsc -p tsconfig.json",
     "action:init": "node script/create-new-action.js",
     "doc": "node script/generate-action-docs.js",
     "test": "standard && jest --coverage"
@@ -56,24 +57,22 @@
   },
   "devDependencies": {
     "@hapi/joi": "^16.0.0-rc2",
+    "@types/bunyan": "1.8.6",
+    "@types/express": "4.17.0",
+    "@types/jest": "24.0.16",
     "enquirer": "^2.3.1",
-    "jest": "^24.8.0",
+    "jest": "24.8.0",
     "js-yaml": "^3.13.1",
     "lodash.isplainobject": "^4.0.6",
     "nock": "^10.0.6",
     "probot": "^7.5.3",
-    "standard": "^13.1.0"
+    "standard": "^13.1.0",
+    "ts-jest": "24.0.2",
+    "typescript": "3.5.3"
   },
   "standard": {
     "env": [
       "jest"
-    ]
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/tests/mockContext.js"
     ]
   }
 }

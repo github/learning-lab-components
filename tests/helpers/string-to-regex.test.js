@@ -1,4 +1,4 @@
-const stringToRegEx = require('../../helpers/string-to-regex')
+const stringToRegEx = require('../../src/helpers/string-to-regex')
 
 describe('stringToRegEx', () => {
   it('converts a string to a Regular Expression', () => {

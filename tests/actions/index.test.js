@@ -2,9 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const isPlainObject = require('lodash.isplainobject')
 
-const actions = require('../../actions')
+const actions = require('../../src/actions')
 
-const actionsDir = path.join(__dirname, '..', '..', 'actions')
+const actionsDir = path.join(__dirname, '..', '..', 'src', 'actions')
 
 const actionNames =
   fs.readdirSync(actionsDir, { withFileTypes: true })
