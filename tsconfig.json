@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    
     "allowJs": true,                       /* Allow javascript files to be compiled. */
     // enable this once all files are .ts and we can remove allowJs
     "declaration": false,                   /* Generates corresponding '.d.ts' file. */
     "esModuleInterop": true,                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-    "lib": ["es2015", "es2017"],                             /* Specify library files to be included in the compilation. */
+    "lib": ["es5", "es6", "es2015", "es7", "es2016", "es2017", "esnext"],                             /* Specify library files to be included in the compilation. */
     "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
     "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
     "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
@@ -13,9 +12,10 @@
     "noUnusedLocals": true,                /* Report errors on unused locals. */
     "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
     "outDir": "./lib",                        /* Redirect output structure to the directory. */
+    "rootDir": "./src",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     "strict": true,                           /* Enable all strict type-checking options. */
     "sourceMap": true,                     /* Generates corresponding '.map' file. */
-    "target": "es5",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
+    "target": "es5"                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
 
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
@@ -23,7 +23,6 @@
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
-    // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */
     // "removeComments": true,                /* Do not emit comments to output. */
@@ -71,8 +70,6 @@
     "node_modules",
     ".github",
     "lib",
-    "coverage",
-    "docs",
-    "src/tests/**/*"
+    "coverage"
   ]
 }

@@ -120,7 +120,7 @@ async function createAction () {
   // Collect answers
   const action = await getActionMetadata()
 
-  const baseDir = path.join(__dirname, `../src/actions/${action.name}`)
+  const baseDir = path.join(__dirname, `../actions/${action.name}`)
   try {
     console.info(`Creating new action directory "${baseDir}"...`)
     await mkdir(baseDir)
@@ -150,7 +150,7 @@ async function createAction () {
   )
 
   console.info('Creating "README.md"...')
-  console.log('__dirname', __dirname)
+  console.log(process.execPath, path.join(__dirname, 'generate-action-docs.js'))
   const { status, signal, error } =
     spawnSync(
       process.execPath,

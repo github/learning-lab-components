@@ -2,12 +2,12 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: [
-    '<rootDir>/src'
+    '<rootDir>/lib/'
   ],
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/src/tests/mockContext.js',
-    '<rootDir>/lib/'
+    '<rootDir>/src'
   ],
   globals: {
     'ts-jest': {

@@ -1,4 +1,4 @@
-const { actions } = require('../index')
+const actions = require('../index')
 const fs = require('fs')
 const path = require('path')
 const jsYaml = require('js-yaml')

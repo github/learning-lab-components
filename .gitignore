@@ -1,5 +1,6 @@
 # Typescript compile
 lib
+.tscache
 
 # Logs
 logs
