@@ -2,7 +2,7 @@
 <p align="center">Open sourced components from <a href="https://lab.github.com/">GitHub Learning Lab</a></p>
 <p align="center">
   <a href="https://github.com/github/learning-lab-components/packages/11396"><img src="https://img.shields.io/github/release/github/learning-lab-components.svg?label=GPR&logo=github" alt="GitHub Package Registry version" /></a>
-  <a href="https://github.com/github/learning-lab-components/actions"><img src="https://action-badges.now.sh/github/learning-lab-components" alt="Build Status" /></a>
+  <a href="https://github.com/github/learning-lab-components/actions"><img src="https://github.com/github/learning-lab-components/workflows/CI%20Build/badge.svg" alt="Build Status" /></a>
   <a href="https://codecov.io/gh/github/learning-lab-components"><img src="https://img.shields.io/codecov/c/gh/github/learning-lab-components.svg?label=codecov&logo=codecov&logoColor=FFFFFF" alt="Code Coverage" /></a>
   <a href="https://github.com/github/learning-lab-components/pulls?q=is%3Aopen+is%3Apr+label%3Adependencies"><img src="https://api.dependabot.com/badges/status?host=github&repo=github/learning-lab-components" alt="Dependabot Enablement" /></a>
   <a href="https://david-dm.org/github/learning-lab-components"><img src="https://img.shields.io/david/github/learning-lab-components.svg" alt="Dependencies Status" /></a>
