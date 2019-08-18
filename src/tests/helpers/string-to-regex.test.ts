@@ -26,6 +26,7 @@ describe('stringToRegEx', () => {
   })
 
   it('throws if the input is not a string', () => {
+    // @ts-ignore
     expect(() => stringToRegEx(true)).toThrowError('Invalid input. Input must be a string')
   })
 })

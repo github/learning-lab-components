@@ -1,4 +1,4 @@
-export default (input: string) => {
+module.exports = (input: string) => {
   // Validate input
   if (typeof input !== 'string') {
     throw new Error('Invalid input. Input must be a string')
