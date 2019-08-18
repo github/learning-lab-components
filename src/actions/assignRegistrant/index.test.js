@@ -1,4 +1,4 @@
-const assignRegistrant = require('.')
+const assignRegistrant = require('./')
 const mockContext = require('../../tests/mockContext')
 
 describe('assignRegistrant', () => {

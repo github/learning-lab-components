@@ -1,4 +1,4 @@
-const mergePullRequest = require('.')
+const mergePullRequest = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('mergePullRequest', () => {

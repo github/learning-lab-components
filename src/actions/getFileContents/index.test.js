@@ -1,4 +1,4 @@
-const getFileContents = require('.')
+const getFileContents = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('getFileContents', () => {

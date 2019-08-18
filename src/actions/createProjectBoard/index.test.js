@@ -1,4 +1,4 @@
-const createProjectBoard = require('.')
+const createProjectBoard = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('createProjectBoard', () => {

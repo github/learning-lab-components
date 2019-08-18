@@ -1,4 +1,4 @@
-const getTree = require('.')
+const getTree = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('getTree', () => {

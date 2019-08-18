@@ -1,4 +1,4 @@
-const gate = require('.')
+const gate = require('./index')
 const operations = require('./operations')
 const mockContext = require('../../tests/mockContext')
 

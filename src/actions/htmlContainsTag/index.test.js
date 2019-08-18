@@ -1,4 +1,4 @@
-const htmlContainsTag = require('.')
+const htmlContainsTag = require('./index')
 
 describe('htmlContainsTag', () => {
   it('returns true if the HTML contains the given tag', async () => {

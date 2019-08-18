@@ -1,4 +1,4 @@
-const updateBranchProtection = require('.')
+const updateBranchProtection = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('updateBranchProtection', () => {

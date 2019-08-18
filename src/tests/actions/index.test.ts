@@ -1,10 +1,10 @@
-const path = require('path')
-const fs = require('fs')
-const isPlainObject = require('lodash.isplainobject')
+import path from 'path';
+import fs from 'fs';
+import isPlainObject from 'lodash.isplainobject';
 
-const actions = require('../../actions')
+import actions from '../../actions';
 
-const actionsDir = path.join(__dirname, '..', '..', 'actions')
+const actionsDir = path.join(__dirname, '../../actions')
 
 const actionNames =
   fs.readdirSync(actionsDir, { withFileTypes: true })
@@ -21,6 +21,7 @@ describe('actions', () => {
 
   it('README mentions all expected actions', async () => {
     const actionsReadme = fs.readFileSync(path.join(actionsDir, 'README.md'), { encoding: 'utf8' })
+
     const expectedContents = `## Available actions
 
 <!-- START_ACTIONS_LIST -->
@@ -28,7 +29,8 @@ ${actionNames.map(name => `- [${name}](./${name})`).join('\n')}
 
 <!-- END_ACTIONS_LIST -->
 `
-    expect(actionsReadme).toContain(expectedContents)
+    // Replacing new line before comparing.
+    expect(actionsReadme.replace(/(\r\n|\n|\r)/gm,"")).toContain(expectedContents.replace(/(\r\n|\n|\r)/gm,""))
   })
 
   describe.each(actionNames)('the action "%s"', (actionName) => {

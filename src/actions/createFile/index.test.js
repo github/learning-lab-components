@@ -1,4 +1,4 @@
-const createFile = require('.')
+const createFile = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('createFile', () => {

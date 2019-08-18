@@ -1,16 +1,18 @@
-const fs = require('fs')
-const path = require('path')
-const { spawnSync } = require('child_process')
-const { promisify } = require('util')
-const { prompt } = require('enquirer')
+import fs from 'fs';
+import path from 'path';
+import { spawnSync } from 'child_process';
+import { promisify } from 'util';
+import { prompt } from 'enquirer';
+
+import * as types from '../types';
 
 const writeFile = promisify(fs.writeFile)
 const mkdir = promisify(fs.mkdir)
 
 const camelCaseMatch = /^[a-z]+[A-Za-z0-9]+$/
 
-const isNotEmpty = value => Boolean(value)
-const isValidName = value => isNotEmpty(value) && camelCaseMatch.test(value)
+const isNotEmpty = (value: string) => Boolean(value)
+const isValidName = (value: string) => isNotEmpty(value) && camelCaseMatch.test(value)
 
 /**
  * The options object returned from the CLI questionnaire prompt.
@@ -23,7 +25,7 @@ const isValidName = value => isNotEmpty(value) && camelCaseMatch.test(value)
  * Prompts the user with a questionnaire to get key metadata for the GitHub Action.
  * @returns {Promise<PromptAnswers>} An object containing prompt answers.
  */
-async function getActionMetadata () {
+const getActionMetadata = async () : Promise<types.IPromptAnswers> => {
   return prompt([
     {
       type: 'input',
@@ -50,17 +52,40 @@ async function getActionMetadata () {
  * @param {PromptAnswers} answers - The CLI prompt answers.
  * @returns {string} The "schema.js" contents.
  */
-function createSchema ({ name, description }) {
-  const schemaContents = `const Joi = require('@hapi/joi')
-const data = require('../../schemas/data')
 
-module.exports = Joi.object({
+ /* 
+ const createSchema = ({ name, description }: types.IPromptAnswers) => {
+  const schemaContents = `import Joi from '@hapi/joi';
+import data from '../../schemas/data';
+
+export default Joi.object({
   data
 })
-  .description('${description.replace(/'/g, '\\\'')}')
+  .description('${
+    // @ts-ignore
+    description.replace(/'/g, '\\\'')}')
   .example(
     []
   )
+`
+  return schemaContents
+}
+ */
+
+
+const createSchema = ({ name, description }: types.IPromptAnswers) => {
+  const schemaContents = `const Joi = require('@hapi/joi')
+  const data = require('../../schemas/data')
+  
+  module.exports = Joi.object({
+    data
+  })
+    .description('${
+      //@ts-ignore
+      description.replace(/'/g, '\\\'')}')
+    .example(
+      []
+    )  
 `
   return schemaContents
 }
@@ -73,10 +98,21 @@ module.exports = Joi.object({
  * @param {PromptAnswers} answers - The CLI prompt answers.
  * @returns {string} The "index.js" contents.
  */
-function createIndex ({ name }) {
-  const indexContents = `module.exports = async (context, opts) => {
-  // TODO: ${name}
+
+ /*
+ const createIndex = ({ name }: types.IPromptAnswers) => {
+  const indexContents = `export default async (context, opts) => {
+  // TODO: test
+};
+`
+  return indexContents
 }
+ */
+
+const createIndex = ({ name }: types.IPromptAnswers) => {
+  const indexContents = `module.exports = async (context, opts) => {
+    // TODO: ${name}
+  }
 `
   return indexContents
 }
@@ -89,9 +125,11 @@ function createIndex ({ name }) {
  * @param {PromptAnswers} answers - The CLI prompt answers.
  * @returns {string} The "index.test.js" contents.
  */
-function createTest ({ name }) {
-  const testContents = `const ${name} = require('./')
-const mockContext = require('../../tests/mockContext')
+
+ /*
+ const createTest = ({ name }: types.IPromptAnswers) => {
+  const testContents = `import ${name} from '.';
+import mockContext from '../../tests/mockContext';
 
 describe('${name}', () => {
   let context
@@ -109,6 +147,28 @@ describe('${name}', () => {
 `
   return testContents
 }
+ */
+
+const createTest = ({ name }: types.IPromptAnswers) => {
+  const testContents = `const ${name} = require('./')
+  const mockContext = require('../../tests/mockContext')
+  
+  describe('${name}', () => {
+    let context
+  
+    beforeEach(() => {
+      context = mockContext({}, {})
+    })
+  
+    it('fails until real tests are added', async () => {
+      expect(true).toBe(false)
+  
+      // await ${name}(context, {})
+    })
+  })
+`
+  return testContents
+}
 
 /**
  * Runs the create action CLI prompt and bootstraps a new directory for the user.
@@ -116,7 +176,7 @@ describe('${name}', () => {
  * @public
  * @returns {Promise<void>} Nothing.
  */
-async function createAction () {
+const createAction = async () => {
   // Collect answers
   const action = await getActionMetadata()
 

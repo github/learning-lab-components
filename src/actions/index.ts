@@ -1,4 +1,6 @@
-const fs = require('fs')
+import fs from 'fs';
+
+import * as types from '../types';
 
 const actionNames =
   fs.readdirSync(__dirname, { withFileTypes: true })
@@ -6,11 +8,11 @@ const actionNames =
     .map(ent => ent.name)
     .sort()
 
-const actions = {}
+let actions: types.IAction = {} 
 
 for (const actionName of actionNames) {
   actions[actionName] = require(`./${actionName}`)
-  actions[actionName].schema = require(`./${actionName}/schema`)
+  actions[actionName].schema = require(`./${actionName}/schema`);
 }
 
-module.exports = actions
+export default actions;

@@ -1,9 +1,13 @@
-const actions = require('../index')
-const fs = require('fs')
-const path = require('path')
-const jsYaml = require('js-yaml')
+import actions from '../index';
+import fs from 'fs';
+import path from 'path';
+import jsYaml from 'js-yaml';
 
-const template = ({ key, description, rows, examples }) => `<!--
+import * as types from '../types';
+
+console.log(actions);
+
+const template = ({ key, description, rows, examples } : types.ITemplateVariables) => `<!--
   /!\\ WARNING /!\\
   This file's content is auto-generated, do NOT edit!
   All changes will be undone.
@@ -25,7 +29,8 @@ ${rows}
 /**
  * Convert a list of children properties into table rows.
  */
-function mapChildrenToRows (children) {
+const mapChildrenToRows = (children: any) => {
+  console.log("mapchildren")
   return Object.keys(children).reduce((prev, key) => {
     const opt = children[key]
     const cells = [
@@ -52,7 +57,8 @@ function mapChildrenToRows (children) {
  *  {{ yaml }}
  *  ```
  */
-function mapExamples (examples, key) {
+function mapExamples (examples: types.Examples, key: string) {
+  console.log("mapExample")
   const blocks = examples
     .map(obj => {
       const [value, options] = obj
@@ -70,7 +76,8 @@ function mapExamples (examples, key) {
 /**
  * Return a string to use as the file contents for the generated README.md
  */
-function generate (actionKey) {
+function generate (actionKey: string) {
+  console.log("generate")
   const schema = actions[actionKey].schema.describe()
   const rows = mapChildrenToRows(schema.children)
   const examples = schema.examples ? mapExamples(schema.examples, actionKey) : ''
@@ -86,7 +93,8 @@ function generate (actionKey) {
 
 // Loop over each action to generate it's README.md
 for (const actionKey in actions) {
-  const pathToDoc = path.join(__dirname, '..', 'actions', actionKey, 'README.md')
+  console.log("for loop")
+  const pathToDoc = path.join(__dirname, `../actions/${actionKey}/README.md`)
   const body = generate(actionKey)
   fs.writeFileSync(pathToDoc, body)
 }
@@ -96,6 +104,7 @@ for (const actionKey in actions) {
  * in `/actions/README.md`.
  */
 function updateTableOfContents () {
+  console.log("update table of content")
   const START_ACTIONS_LIST = '<!-- START_ACTIONS_LIST -->'
   const END_ACTIONS_LIST = '<!-- END_ACTIONS_LIST -->'
   const tocReg = new RegExp(START_ACTIONS_LIST + '[\\s\\S]+' + END_ACTIONS_LIST)

@@ -6,7 +6,6 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules/',
-    '<rootDir>/src/tests/mockContext.js',
     '<rootDir>/src'
   ],
   globals: {

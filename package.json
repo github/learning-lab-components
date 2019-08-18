@@ -42,9 +42,9 @@
   },
   "scripts": {
     "build": "grunt",
-    "action:init": "node ./lib/script/create-new-action.js",
+    "action:init": "npm run build && node ./lib/script/create-new-action.js",
     "doc": "node ./lib/script/generate-action-docs.js",
-    "test:afterBuild": "jest --coverage"
+    "test": "npm run build && jest --coverage"
   },
   "dependencies": {
     "@octokit/rest": "^15.18.1",
@@ -59,7 +59,10 @@
     "@hapi/joi": "^16.0.0-rc2",
     "@types/bunyan": "1.8.6",
     "@types/express": "4.17.0",
+    "@types/get-value": "3.0.1",
     "@types/jest": "24.0.16",
+    "@types/js-yaml": "3.12.1",
+    "@types/lodash.isplainobject": "4.0.6",
     "enquirer": "^2.3.1",
     "grunt": "1.0.4",
     "grunt-contrib-clean": "2.0.0",

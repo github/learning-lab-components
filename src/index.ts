@@ -1,2 +1,3 @@
-const actions = require('./actions');
-module.exports = actions;
+import actions from './actions';
+
+export default actions;

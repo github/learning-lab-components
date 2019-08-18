@@ -1,4 +1,4 @@
-const createLabel = require('.')
+const createLabel = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('createLabel', () => {

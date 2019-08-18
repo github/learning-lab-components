@@ -1,4 +1,4 @@
-const requestReviewFromRegistrant = require('.')
+const requestReviewFromRegistrant = require('./index')
 const mockContext = require('../../tests/mockContext')
 
 describe('requestReviewFromRegistrant', () => {

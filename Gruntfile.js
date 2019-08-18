@@ -20,5 +20,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-ts');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
-  grunt.registerTask('default', ['clean', 'ts']);
+  grunt.registerTask('default', ['clean', 'ts', 'copy']);
 }
