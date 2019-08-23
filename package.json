@@ -46,7 +46,7 @@
     "test": "standard && jest --coverage"
   },
   "dependencies": {
-    "@octokit/rest": "^15.18.1",
+    "@octokit/rest": "^16.28.7",
     "get-value": "^3.0.1",
     "has": "^1.0.3",
     "htmlparser2": "^4.0.0"
