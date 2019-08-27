@@ -26,22 +26,28 @@ describe('gate', () => {
 
   it('evaluates correctly with multiple gates', async () => {
     // All resolve to true
-    expect(await gate(context, { gates: [
-      { left: 'test', operator: '===', right: 'test' },
-      { left: 'yep', operator: '===', right: 'yep' }
-    ] })).toBe(true)
+    expect(await gate(context, {
+      gates: [
+        { left: 'test', operator: '===', right: 'test' },
+        { left: 'yep', operator: '===', right: 'yep' }
+      ]
+    })).toBe(true)
 
     // At least one resolves to true
-    expect(await gate(context, { gates: [
-      { left: 'test', operator: '===', right: 'tester' },
-      { left: 'yep', operator: '===', right: 'yep' }
-    ] })).toBe(true)
+    expect(await gate(context, {
+      gates: [
+        { left: 'test', operator: '===', right: 'tester' },
+        { left: 'yep', operator: '===', right: 'yep' }
+      ]
+    })).toBe(true)
 
     // All resolve to false
-    expect(await gate(context, { gates: [
-      { left: 'test', operator: '===', right: 'tester' },
-      { left: 'yep', operator: '===', right: 'nope' }
-    ] })).toBe(false)
+    expect(await gate(context, {
+      gates: [
+        { left: 'test', operator: '===', right: 'tester' },
+        { left: 'yep', operator: '===', right: 'nope' }
+      ]
+    })).toBe(false)
   })
 
   it('evaluates correctly with multiple gates and every set to true', async () => {
@@ -137,21 +143,21 @@ describe('gate', () => {
       expect(operations['<='](1, 2)).toBe(true)
     })
     test('search', () => {
-      expect(operations['search']('test', 'tes')).toBe(true)
+      expect(operations.search('test', 'tes')).toBe(true)
     })
     test('test', () => {
-      expect(operations['test']('/TE/i', 'test')).toBe(true)
+      expect(operations.test('/TE/i', 'test')).toBe(true)
     })
     test('!test', () => {
       expect(operations['!test']('/TE/i', 'test')).toBe(false)
     })
     test('includes', () => {
-      expect(operations['includes'](['a', 'b'], 'a')).toBe(true)
-      expect(operations['includes'](['abc', 'absolute'], 'a')).toBe(false)
-      expect(operations['includes'](['jason', 'eric'], '/^ja.*n$/')).toBe(true)
-      expect(operations['includes']([{ foo: 'a' }, { foo: 'b' }], 'foo:a')).toBe(true)
-      expect(operations['includes']([{ foo: 'jason' }, { foo: 'notjason' }], 'foo:/jason/')).toBe(true)
-      expect(operations['includes']([{ foo: 'jason' }, { foo: 'notjason' }], 'foo:/adam/')).toBe(false)
+      expect(operations.includes(['a', 'b'], 'a')).toBe(true)
+      expect(operations.includes(['abc', 'absolute'], 'a')).toBe(false)
+      expect(operations.includes(['jason', 'eric'], '/^ja.*n$/')).toBe(true)
+      expect(operations.includes([{ foo: 'a' }, { foo: 'b' }], 'foo:a')).toBe(true)
+      expect(operations.includes([{ foo: 'jason' }, { foo: 'notjason' }], 'foo:/jason/')).toBe(true)
+      expect(operations.includes([{ foo: 'jason' }, { foo: 'notjason' }], 'foo:/adam/')).toBe(false)
     })
     test('!includes', () => {
       expect(operations['!includes'](['a', 'b'], 'a')).toBe(false)

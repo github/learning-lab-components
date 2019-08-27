@@ -1,0 +1,50 @@
+name: Release Management
+
+on:
+  push:
+    # branches to consider in the event; optional, defaults to all
+    branches:
+      - master
+
+jobs:
+  update_draft_release:
+    runs-on: ubuntu-latest
+    steps:
+      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: toolmantim/release-drafter@v5.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish_draft_release_on_version_bump:
+    needs: [update_draft_release]
+    runs-on: ubuntu-latest
+    steps:
+      # Does a checkout of your repository at the pushed commit SHA
+      - uses: actions/checkout@v1
+      # Checks for a version bump to publish an existing Draft Release
+      - id: github_release
+        uses: JamesMGreene/node-draft-releaser@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Show the Release URL, just for fun
+      - run: echo "Released at $RELEASE_URL"
+        env:
+          RELEASE_URL: ${{ steps.github_release.outputs.release_url }}
+
+  publish_package_to_gpr:
+    needs: [publish_draft_release_on_version_bump]
+    runs-on: ubuntu-latest
+    steps:
+      # Does a checkout of your repository at the pushed commit SHA
+      - uses: actions/checkout@v1
+      # Set up the local Node environment for the NPM CLI
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+          registry-url: 'https://npm.pkg.github.com'
+      # Install dependencies in case there are any publish-related scripts
+      - run: npm install
+      # Publish the new version to GPR
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
