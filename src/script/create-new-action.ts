@@ -24,6 +24,17 @@ const camelCaseMatch: RegExp = /^[a-z]+[A-Za-z0-9]+$/
 const isNotEmpty = (value: string): boolean => Boolean(value)
 const isValidName = (value: string): boolean => isNotEmpty(value) && camelCaseMatch.test(value)
 
+/**
+ * The options object returned from the CLI questionnaire prompt.
+ * @typedef {object} PromptAnswers
+ * @property {string} name - The action name.
+ * @property {string} description - The action description.
+ */
+
+/**
+ * Prompts the user with a questionnaire to get key metadata for the GitHub Action.
+ * @returns {Promise<PromptAnswers>} An object containing prompt answers.
+ */
 const getActionMetadata = async () : Promise<types.IPromptAnswers> => {
   return prompt([
     {
@@ -43,6 +54,7 @@ const getActionMetadata = async () : Promise<types.IPromptAnswers> => {
   ])
 }
 
+
  /* 
  const createSchema = ({ name, description }: types.IPromptAnswers) => {
   const schemaContents = `import Joi from '@hapi/joi';
@@ -61,8 +73,14 @@ export default Joi.object({
   return schemaContents
 }
  */
-
-
+/**
+ * Creates the contents string for "schema.js",
+ * replacing variables in the template with values passed
+ * in by the user from the CLI prompt.
+ *
+ * @param {PromptAnswers} answers - The CLI prompt answers.
+ * @returns {string} The "schema.js" contents.
+ */
 const createSchema = ({ description }: Partial<types.IPromptAnswers>): string => {
   const schemaContents = `const Joi = require('@hapi/joi')
   const data = require('../../schemas/data')
@@ -78,6 +96,7 @@ const createSchema = ({ description }: Partial<types.IPromptAnswers>): string =>
   return schemaContents
 }
 
+
 /*
  const createIndex = ({ name }: types.IPromptAnswers) => {
   const indexContents = `export default async (context, opts) => {
@@ -87,7 +106,14 @@ const createSchema = ({ description }: Partial<types.IPromptAnswers>): string =>
   return indexContents
 }
  */
-
+/**
+ * Creates the contents string for "index.js",
+ * replacing variables in the template with values passed
+ * in by the user from the CLI prompt.
+ *
+ * @param {PromptAnswers} answers - The CLI prompt answers.
+ * @returns {string} The "index.js" contents.
+ */
 const createIndex = ({ name }: Partial<types.IPromptAnswers>): string => {
   const indexContents = `module.exports = async (context, opts) => {
     // TODO: ${name}
@@ -95,6 +121,7 @@ const createIndex = ({ name }: Partial<types.IPromptAnswers>): string => {
 `
   return indexContents
 }
+
 
  /*
  const createTest = ({ name }: types.IPromptAnswers) => {
@@ -118,7 +145,14 @@ describe('${name}', () => {
   return testContents
 }
  */
-
+/**
+ * Creates the contents string for "index.test.js",
+ * replacing variables in the template with values passed
+ * in by the user from the CLI prompt.
+ *
+ * @param {PromptAnswers} answers - The CLI prompt answers.
+ * @returns {string} The "index.test.js" contents.
+ */
 const createTest = ({ name }: Partial<types.IPromptAnswers>): string => {
   const testContents = `const ${name} = require('./')
   import mockContext from '../../tests/mockContext'
@@ -140,7 +174,12 @@ const createTest = ({ name }: Partial<types.IPromptAnswers>): string => {
   return testContents
 }
 
-
+/**
+ * Runs the create action CLI prompt and bootstraps a new directory for the user.
+ *
+ * @public
+ * @returns {Promise<void>} Nothing.
+ */
 const createAction = async (): Promise<void> => {
   // Collect answers
   const action: types.IPromptAnswers = await getActionMetadata()
