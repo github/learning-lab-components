@@ -32,6 +32,8 @@ export interface ISubChildrenObject {
     }
 }
 
+
+
 export interface Children {
     [key: string]: ISubChildrenObject
 }
@@ -55,4 +57,9 @@ export interface ISubActionObject {
 
 export interface IAction {
      [actionKey: string]: ISubActionObject;
+}
+
+export interface IObject {
+    [key: string]: string,
+    data: any
 }

@@ -1,14 +1,42 @@
-const get = require('get-value')
-const has = require('has')
-const { Context: ProbotContext } = require('probot/lib/context')
+import get from 'get-value';
+import has from 'has';
+import { Context as ProbotContext } from 'probot/lib/context';
+import { LoggerWithTarget } from 'probot/lib/wrap-logger';
+import Webhooks from '@octokit/webhooks';
+import { GitHubAPI } from 'probot/lib/github';
+
+import * as types from '../types';
 
 // IMPORTANT:
 // This class is duck-typed based on the real Context object in GitHub Learning Lab.
 // It has only been given enough API surface area to support the existing actions.
 class Context extends ProbotContext {
-  constructor ({ event, github, log }, { user, step, registration }) {
-    const childLog = log.child({ user: user.login, registration_id: registration.id })
-    super(event, github, childLog)
+
+  // Property 'preferences' does not exist on type 'Context'.
+  preferences: null;
+  fromFile!: jest.Mock<any, any>;
+  runActions!: jest.Mock<any, any>;
+  
+  constructor ({ 
+    event, github, log }: {
+      event: Partial<Webhooks.WebhookEvent<any>>, 
+      github: Partial<GitHubAPI>, 
+      log: Partial<LoggerWithTarget> 
+    }, 
+    { user, step, registration }: { 
+      user: { 
+        login: string}, 
+        step: { slug: string },
+        registration: { id: number } 
+    }) {
+
+    const childLog: LoggerWithTarget = (<LoggerWithTarget>log).child({ user: user.login, registration_id: registration.id })
+
+    super(
+      (<Webhooks.WebhookEvent<any>>event), 
+      <GitHubAPI>github, 
+      <LoggerWithTarget>childLog
+    )
 
     // Memoize values
     Object.assign(this, {
@@ -32,9 +60,9 @@ class Context extends ProbotContext {
    * @param {string} query - May be a templated string, like `%payload.sender.id%`
    * @returns {string}
    */
-  getValueFromContext (query) {
-    const singleMatchReg = /^%[^%]+%$/
-    const multiMatchReg = /\\%|(?<!\\)%([^%]+)(?<!\\)%/g
+  getValueFromContext (query: string): string {
+    const singleMatchReg: RegExp = /^%[^%]+%$/
+    const multiMatchReg: RegExp = /\\%|(?<!\\)%([^%]+)(?<!\\)%/g
 
     if (typeof query === 'string') {
       // If the templated string is the whole string, then return
@@ -62,7 +90,9 @@ class Context extends ProbotContext {
    * @param {object} obj
    * @returns {object}
    */
-  getValuesFromContext (obj) {
+  getValuesFromContext (
+    obj: types.IObject
+  ) {
     const o = Object.assign({}, obj)
 
     for (const key in o) {
@@ -78,8 +108,8 @@ class Context extends ProbotContext {
   }
 }
 
-module.exports = (payload, github) => {
-  const context = new Context(
+export default (payload: Partial<ProbotContext>, github: GitHubAPI): ProbotContext => {
+  const context: Context = new Context(
     {
       event: {
         payload: {
@@ -92,9 +122,13 @@ module.exports = (payload, github) => {
         ...github
       },
       log: {
+        // @ts-ignore
         info: jest.fn(),
+        // @ts-ignore
         error: jest.fn(),
+        // @ts-ignore
         debug: jest.fn(),
+        // @ts-ignore
         child: function () {
           return this
         }

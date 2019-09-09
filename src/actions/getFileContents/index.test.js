@@ -1,5 +1,5 @@
 const getFileContents = require('./index')
-const mockContext = require('../../tests/mockContext')
+import mockContext from '../../tests/mockContext'
 
 describe('getFileContents', () => {
   let context

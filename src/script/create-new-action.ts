@@ -121,7 +121,7 @@ describe('${name}', () => {
 
 const createTest = ({ name }: Partial<types.IPromptAnswers>): string => {
   const testContents = `const ${name} = require('./')
-  const mockContext = require('../../tests/mockContext')
+  import mockContext from '../../tests/mockContext'
   
   describe('${name}', () => {
     let context
