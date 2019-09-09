@@ -3,10 +3,11 @@ import fs from 'fs';
 import isPlainObject from 'lodash.isplainobject';
 
 import actions from '../../actions';
+import * as types from '../../types';
 
-const actionsDir = path.join(__dirname, '../../actions')
+const actionsDir: string = path.join(__dirname, '../../actions')
 
-const actionNames =
+const actionNames: Array<string> =
   fs.readdirSync(actionsDir, { withFileTypes: true })
     .filter(ent => ent.isDirectory())
     .map(ent => ent.name)
@@ -14,15 +15,15 @@ const actionNames =
 
 describe('actions', () => {
   it('module has properties for all expected actions', async () => {
-    const actionKeys = Object.keys(actions).sort()
+    const actionKeys: Array<string> = Object.keys(actions).sort()
     expect(actionKeys).toEqual(actionNames)
     expect(actionKeys).toMatchSnapshot()
   })
 
   it('README mentions all expected actions', async () => {
-    const actionsReadme = fs.readFileSync(path.join(actionsDir, 'README.md'), { encoding: 'utf8' })
+    const actionsReadme: string = fs.readFileSync(path.join(actionsDir, 'README.md'), { encoding: 'utf8' })
 
-    const expectedContents = `## Available actions
+    const expectedContents: string = `## Available actions
 
 <!-- START_ACTIONS_LIST -->
 ${actionNames.map(name => `- [${name}](./${name})`).join('\n')}
@@ -34,7 +35,7 @@ ${actionNames.map(name => `- [${name}](./${name})`).join('\n')}
   })
 
   describe.each(actionNames)('the action "%s"', (actionName) => {
-    const action = actions[actionName]
+    const action: types.ISubActionObject = actions[actionName]
 
     it('has the minimum set of required files', async () => {
       const actionDirFiles =
@@ -61,22 +62,22 @@ ${actionNames.map(name => `- [${name}](./${name})`).join('\n')}
 
     describe('has a schema which', () => {
       // Get a plain object rendering of the schema to avoid relying on Joi internals
-      const schema = action.schema.describe()
+      const schema: Partial<types.Schema> = action.schema.describe()
 
       it('has a description', () => {
         expect(typeof schema.description).toBe('string')
-        expect(schema.description.length).toBeGreaterThan(0)
+        expect((<string>schema.description).length).toBeGreaterThan(0)
       })
 
       it('has at least one example', () => {
         expect(Array.isArray(schema.examples)).toBe(true)
-        expect(schema.examples.length).toBeGreaterThan(0)
+        expect((<types.Examples>schema.examples).length).toBeGreaterThan(0)
       })
 
       it('has examples which all include a context if there is more than one example', () => {
-        const hasMoreThanOneExample = schema.examples.length > 1
+        const hasMoreThanOneExample: boolean = (<types.Examples>schema.examples).length > 1
 
-        for (const example of schema.examples) {
+        for (const example of (<types.Examples>schema.examples)) {
           expect(Array.isArray(example)).toBe(true)
           expect(example.length).toBeGreaterThanOrEqual(1)
           expect(example.length).toBeLessThanOrEqual(2)

@@ -9,9 +9,7 @@ export interface IExampleObject {
 }
 
 
-type Example = Array<IExampleObject>;
-
-export type Examples = Array<Example>;
+export type Examples = Array<Array<IExampleObject>>;
 
 export interface ITemplateVariables { 
     key: string, 
@@ -21,13 +19,40 @@ export interface ITemplateVariables {
     examples: Examples | string
 }
 
-type Schema = {
-    schema: {
-        describe: any;
+export interface ISubChildrenObject {
+    meta: {
+        [index: number]: {
+            label: string
+        }
     },
-    length: number
+    description: string,
+    flags: {
+        default: string,
+        presence: string
+    }
 }
 
+export interface Children {
+    [key: string]: ISubChildrenObject
+}
+
+export type Schema = {
+    describe: () => Partial<Schema>,
+    children: Children,
+    examples: Examples,
+    meta: {
+        [index: number]: {
+            label: string
+        }
+    },
+    description: string
+};
+
+export interface ISubActionObject {
+    schema: Schema,
+    length: () => number
+};
+
 export interface IAction {
-    [ actionKey: string ]: Schema,
+     [actionKey: string]: ISubActionObject;
 }

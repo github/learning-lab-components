@@ -8,7 +8,7 @@ const actionNames =
     .map(ent => ent.name)
     .sort()
 
-let actions: types.IAction = {} 
+let actions: types.IAction = {};
 
 for (const actionName of actionNames) {
   actions[actionName] = require(`./${actionName}`)
