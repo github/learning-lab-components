@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import * as types from '../types';
 
-const actionNames =
+const actionNames: Array<string> =
   fs.readdirSync(__dirname, { withFileTypes: true })
     .filter(ent => ent.isDirectory())
     .map(ent => ent.name)
