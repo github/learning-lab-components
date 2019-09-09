@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
-    "allowJs": true,                       /* Allow javascript files to be compiled. */
+    "allowJs": true,                           /* Allow javascript files to be compiled. */
     // enable this once all files are .ts and we can remove allowJs
-    "declaration": false,                   /* Generates corresponding '.d.ts' file. */
+    "declaration": false,                      /* Generates corresponding '.d.ts' file. */
     "esModuleInterop": true,                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "lib": ["es5", "es6", "es2015", "es7", "es2016", "es2017", "esnext"],                             /* Specify library files to be included in the compilation. */
     "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
-    "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
-    "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
-    "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
-    "noUnusedLocals": true,                /* Report errors on unused locals. */
-    "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
+    "moduleResolution": "node",               /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    "noImplicitReturns": true,                /* Report error when not all code paths in function return a value. */
+    "noFallthroughCasesInSwitch": true,       /* Report errors for fallthrough cases in switch statement. */
+    "noUnusedLocals": true,                   /* Report errors on unused locals. */
+    "noImplicitAny": true,                    /* Raise error on expressions and declarations with an implied 'any' type. */
     "outDir": "./lib",                        /* Redirect output structure to the directory. */
     "rootDir": "./src",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     "strict": true,                           /* Enable all strict type-checking options. */
-    "sourceMap": true,                     /* Generates corresponding '.map' file. */
+    "strictNullChecks": true,                 /* Enable strict null checks. */
+    "sourceMap": true,                        /* Generates corresponding '.map' file. */
     "target": "es5"                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
 
     /* Basic Options */
@@ -32,7 +33,6 @@
     // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
 
     /* Strict Type-Checking Options */
-    // "strictNullChecks": true,              /* Enable strict null checks. */
     // "strictFunctionTypes": true,           /* Enable strict checking of function types. */
     // "strictBindCallApply": true,           /* Enable strict 'bind', 'call', and 'apply' methods on functions. */
     // "strictPropertyInitialization": true,  /* Enable strict checking of property initialization in classes. */

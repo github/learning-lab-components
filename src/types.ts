@@ -1,11 +1,11 @@
 export interface IPromptAnswers {
     name: string;
-    description?: string;
+    description: string;
 }
 
 export interface IExampleObject {
-    issue?: string | number,
-    context?: string
+    issue: string | number,
+    context: string
 }
 
 
@@ -15,7 +15,7 @@ export type Examples = Array<Example>;
 
 export interface ITemplateVariables { 
     key: string, 
-    title?: string,
+    title: string,
     description: string, 
     rows: string, 
     examples: Examples | string

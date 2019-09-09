@@ -3,28 +3,27 @@ import path from 'path';
 import { spawnSync } from 'child_process';
 import { promisify } from 'util';
 import { prompt } from 'enquirer';
+import { URL } from 'url';
 
 import * as types from '../types';
 
-const writeFile = promisify(fs.writeFile)
-const mkdir = promisify(fs.mkdir)
+const writeFile: (
+  path: string | number | Buffer | URL, 
+  data: any, 
+  options?: string | { 
+    encoding?: string | null | undefined; 
+    mode?: string | number | undefined; 
+    flag?: string | undefined; 
+  } | null | undefined
+) => Promise<void> = promisify(fs.writeFile)
 
-const camelCaseMatch = /^[a-z]+[A-Za-z0-9]+$/
+const mkdir: (path: fs.PathLike, options?: string | number | fs.MakeDirectoryOptions | null | undefined) => Promise<void> = promisify(fs.mkdir)
 
-const isNotEmpty = (value: string) => Boolean(value)
-const isValidName = (value: string) => isNotEmpty(value) && camelCaseMatch.test(value)
+const camelCaseMatch: RegExp = /^[a-z]+[A-Za-z0-9]+$/
 
-/**
- * The options object returned from the CLI questionnaire prompt.
- * @typedef {object} PromptAnswers
- * @property {string} name - The action name.
- * @property {string} description - The action description.
- */
+const isNotEmpty = (value: string): boolean => Boolean(value)
+const isValidName = (value: string): boolean => isNotEmpty(value) && camelCaseMatch.test(value)
 
-/**
- * Prompts the user with a questionnaire to get key metadata for the GitHub Action.
- * @returns {Promise<PromptAnswers>} An object containing prompt answers.
- */
 const getActionMetadata = async () : Promise<types.IPromptAnswers> => {
   return prompt([
     {
@@ -43,15 +42,6 @@ const getActionMetadata = async () : Promise<types.IPromptAnswers> => {
     }
   ])
 }
-
-/**
- * Creates the contents string for "schema.js",
- * replacing variables in the template with values passed
- * in by the user from the CLI prompt.
- *
- * @param {PromptAnswers} answers - The CLI prompt answers.
- * @returns {string} The "schema.js" contents.
- */
 
  /* 
  const createSchema = ({ name, description }: types.IPromptAnswers) => {
@@ -73,16 +63,14 @@ export default Joi.object({
  */
 
 
-const createSchema = ({ name, description }: types.IPromptAnswers) => {
+const createSchema = ({ description }: Partial<types.IPromptAnswers>): string => {
   const schemaContents = `const Joi = require('@hapi/joi')
   const data = require('../../schemas/data')
   
   module.exports = Joi.object({
     data
   })
-    .description('${
-      //@ts-ignore
-      description.replace(/'/g, '\\\'')}')
+    .description('${ (<string>description).replace(/'/g, '\\\'')}')
     .example(
       []
     )  
@@ -90,16 +78,7 @@ const createSchema = ({ name, description }: types.IPromptAnswers) => {
   return schemaContents
 }
 
-/**
- * Creates the contents string for "index.js",
- * replacing variables in the template with values passed
- * in by the user from the CLI prompt.
- *
- * @param {PromptAnswers} answers - The CLI prompt answers.
- * @returns {string} The "index.js" contents.
- */
-
- /*
+/*
  const createIndex = ({ name }: types.IPromptAnswers) => {
   const indexContents = `export default async (context, opts) => {
   // TODO: test
@@ -109,22 +88,13 @@ const createSchema = ({ name, description }: types.IPromptAnswers) => {
 }
  */
 
-const createIndex = ({ name }: types.IPromptAnswers) => {
+const createIndex = ({ name }: Partial<types.IPromptAnswers>): string => {
   const indexContents = `module.exports = async (context, opts) => {
     // TODO: ${name}
   }
 `
   return indexContents
 }
-
-/**
- * Creates the contents string for "index.test.js",
- * replacing variables in the template with values passed
- * in by the user from the CLI prompt.
- *
- * @param {PromptAnswers} answers - The CLI prompt answers.
- * @returns {string} The "index.test.js" contents.
- */
 
  /*
  const createTest = ({ name }: types.IPromptAnswers) => {
@@ -149,7 +119,7 @@ describe('${name}', () => {
 }
  */
 
-const createTest = ({ name }: types.IPromptAnswers) => {
+const createTest = ({ name }: Partial<types.IPromptAnswers>): string => {
   const testContents = `const ${name} = require('./')
   const mockContext = require('../../tests/mockContext')
   
@@ -170,17 +140,12 @@ const createTest = ({ name }: types.IPromptAnswers) => {
   return testContents
 }
 
-/**
- * Runs the create action CLI prompt and bootstraps a new directory for the user.
- *
- * @public
- * @returns {Promise<void>} Nothing.
- */
-const createAction = async () => {
-  // Collect answers
-  const action = await getActionMetadata()
 
-  const baseDir = path.join(__dirname, `../actions/${action.name}`)
+const createAction = async (): Promise<void> => {
+  // Collect answers
+  const action: types.IPromptAnswers = await getActionMetadata()
+
+  const baseDir: string = path.join(__dirname, `../actions/${action.name}`)
   try {
     console.info(`Creating new action directory "${baseDir}"...`)
     await mkdir(baseDir)
@@ -193,9 +158,9 @@ const createAction = async () => {
   }
 
   // Create the templated content
-  const schema = createSchema(action)
-  const index = createIndex(action)
-  const test = createTest(action)
+  const schema: string = createSchema(action)
+  const index: string = createIndex(action)
+  const test: string = createTest(action)
 
   await Promise.all(
     [
