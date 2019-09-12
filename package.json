@@ -52,10 +52,10 @@
     "htmlparser2": "^4.0.0"
   },
   "peerDependencies": {
-    "@hapi/joi": "^16.0.0-rc2"
+    "@hapi/joi": "^16.0.0"
   },
   "devDependencies": {
-    "@hapi/joi": "^16.0.0-rc2",
+    "@hapi/joi": "^16.0.0",
     "enquirer": "^2.3.1",
     "jest": "^24.9.0",
     "js-yaml": "^3.13.1",
