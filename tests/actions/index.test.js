@@ -28,7 +28,7 @@ ${actionNames.map(name => `- [${name}](./${name})`).join('\n')}
 
 <!-- END_ACTIONS_LIST -->
 `
-    expect(actionsReadme).toContain(expectedContents)
+    expect(actionsReadme.replace(/(\r\n|\n|\r)/gm, '')).toContain(expectedContents.replace(/(\r\n|\n|\r)/gm, ''))
   })
 
   describe.each(actionNames)('the action "%s"', (actionName) => {
