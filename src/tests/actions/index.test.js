@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const isPlainObject = require('lodash.isplainobject')
 
-const actions = require('../../actions')
+const { actions } = require('../../actions')
 
 const actionsDir = path.join(__dirname, '..', '..', 'actions')
 

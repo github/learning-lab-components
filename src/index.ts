@@ -1,2 +1,1 @@
-import actions from './actions';
-export { actions }
+export { actions } from './actions';

@@ -1,16 +1,18 @@
-const fs = require('fs')
-const path = require('path')
-const { spawnSync } = require('child_process')
-const { promisify } = require('util')
-const { prompt } = require('enquirer')
+import fs from 'fs';
+import path from 'path';
+import { spawnSync } from 'child_process';
+import { promisify } from 'util';
+import { prompt } from 'enquirer';
+
+import * as types from '../types';
 
 const writeFile = promisify(fs.writeFile)
 const mkdir = promisify(fs.mkdir)
 
 const camelCaseMatch = /^[a-z]+[A-Za-z0-9]+$/
 
-const isNotEmpty = value => Boolean(value)
-const isValidName = value => isNotEmpty(value) && camelCaseMatch.test(value)
+const isNotEmpty = (value: string): boolean => Boolean(value)
+const isValidName = (value: string): boolean => isNotEmpty(value) && camelCaseMatch.test(value)
 
 /**
  * The options object returned from the CLI questionnaire prompt.
@@ -23,7 +25,7 @@ const isValidName = value => isNotEmpty(value) && camelCaseMatch.test(value)
  * Prompts the user with a questionnaire to get key metadata for the GitHub Action.
  * @returns {Promise<PromptAnswers>} An object containing prompt answers.
  */
-async function getActionMetadata () {
+const getActionMetadata = async (): Promise<types.IPromptAnswers> => {
   return prompt([
     {
       type: 'input',
@@ -50,14 +52,14 @@ async function getActionMetadata () {
  * @param {PromptAnswers} answers - The CLI prompt answers.
  * @returns {string} The "schema.js" contents.
  */
-function createSchema ({ name, description }) {
+const createSchema = ({ description }: Partial<types.IPromptAnswers>): string => {
   const schemaContents = `const Joi = require('@hapi/joi')
 const data = require('../../schemas/data')
 
 module.exports = Joi.object({
   data
 })
-  .description('${description.replace(/'/g, '\\\'')}')
+  .description('${(<string>description).replace(/'/g, '\\\'')}')
   .example(
     []
   )
@@ -73,7 +75,7 @@ module.exports = Joi.object({
  * @param {PromptAnswers} answers - The CLI prompt answers.
  * @returns {string} The "index.js" contents.
  */
-function createIndex ({ name }) {
+const createIndex = ({ name }: Partial<types.IPromptAnswers>): string => {
   const indexContents = `module.exports = async (context, opts) => {
   // TODO: ${name}
 }
@@ -89,7 +91,7 @@ function createIndex ({ name }) {
  * @param {PromptAnswers} answers - The CLI prompt answers.
  * @returns {string} The "index.test.js" contents.
  */
-function createTest ({ name }) {
+const createTest = ({ name }: Partial<types.IPromptAnswers>): string => {
   const testContents = `const ${name} = require('./')
 const mockContext = require('../../tests/mockContext')
 
@@ -116,11 +118,11 @@ describe('${name}', () => {
  * @public
  * @returns {Promise<void>} Nothing.
  */
-async function createAction () {
+const createAction = async (): Promise<void> => {
   // Collect answers
-  const action = await getActionMetadata()
+  const action: types.IPromptAnswers = await getActionMetadata()
 
-  const baseDir = path.join(__dirname, '..', 'actions', action.name)
+  const baseDir: string = path.join(__dirname, '..', 'actions', action.name)
   try {
     console.info(`Creating new action directory "${baseDir}"...`)
     await mkdir(baseDir)
@@ -133,9 +135,9 @@ async function createAction () {
   }
 
   // Create the templated content
-  const schema = createSchema(action)
-  const index = createIndex(action)
-  const test = createTest(action)
+  const schema: string = createSchema(action)
+  const index: string = createIndex(action)
+  const test: string = createTest(action)
 
   await Promise.all(
     [
@@ -150,7 +152,7 @@ async function createAction () {
   )
 
   console.info('Creating "README.md"...')
-  const { status, signal, error } =
+  const { status, signal, error }: types.SpawnSyncReturns<string> =
     spawnSync(
       process.execPath,
       [
@@ -161,7 +163,7 @@ async function createAction () {
   if (status !== 0) {
     console.error(`Failed to generate README.md!
 Exited with status ${status}, signal ${signal}, error:
-${error.stack}`
+${error}`
     )
     process.exit(1)
   }

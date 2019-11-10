@@ -1,9 +1,11 @@
-const { actions } = require('../index')
-const fs = require('fs')
-const path = require('path')
-const jsYaml = require('js-yaml')
+import { actions } from '../index';
+import fs from 'fs';
+import path from 'path';
+import jsYaml from 'js-yaml';
 
-const template = ({ key, description, rows, examples }) => `<!--
+import * as types from '../types';
+
+const template = ({ key, description, rows, examples }: any) => `<!--
   /!\\ WARNING /!\\
   This file's content is auto-generated, do NOT edit!
   All changes will be undone.
@@ -25,7 +27,7 @@ ${rows}
 /**
  * Convert a list of children properties into table rows.
  */
-function mapChildrenToRows (children) {
+const mapChildrenToRows = (children: types.IKeys): string => {
   return Object.keys(children).reduce((prev, key) => {
     const opt = children[key]
     const cells = [
@@ -52,9 +54,9 @@ function mapChildrenToRows (children) {
  *  {{ yaml }}
  *  ```
  */
-function mapExamples (examples, key) {
+const mapExamples = (examples: types.Examples, key: string) => {
   const blocks = examples
-    .map(obj => {
+    .map( obj => {
       const [value, options] = obj
 
       // Add the `type` property, because including it in the example wouldn't be valid for the schema
@@ -70,14 +72,14 @@ function mapExamples (examples, key) {
 /**
  * Return a string to use as the file contents for the generated README.md
  */
-function generate (actionKey) {
+const generate = (actionKey: string): string => {
+  
   const schema = actions[actionKey].schema.describe()
-  const rows = mapChildrenToRows(schema.keys)
+  const rows: string = mapChildrenToRows(schema.keys)
   const examples = schema.examples ? mapExamples(schema.examples, actionKey) : ''
 
   return template({
     key: actionKey,
-    title: (schema.metas && schema.metas[0] && schema.metas[0].label) || actionKey,
     description: schema.flags.description || '',
     rows,
     examples
@@ -86,8 +88,8 @@ function generate (actionKey) {
 
 // Loop over each action to generate it's README.md
 for (const actionKey in actions) {
-  const pathToDoc = path.join(__dirname, '..', 'actions', actionKey, 'README.md')
-  const body = generate(actionKey)
+  const pathToDoc: string = path.join(__dirname, '..', 'actions', actionKey, 'README.md')
+  const body: string = generate(actionKey)
   fs.writeFileSync(pathToDoc, body)
 }
 
@@ -95,15 +97,15 @@ for (const actionKey in actions) {
  * Update the table of contents, the list of actions,
  * in `/actions/README.md`.
  */
-function updateTableOfContents () {
-  const START_ACTIONS_LIST = '<!-- START_ACTIONS_LIST -->'
-  const END_ACTIONS_LIST = '<!-- END_ACTIONS_LIST -->'
-  const tocReg = new RegExp(START_ACTIONS_LIST + '[\\s\\S]+' + END_ACTIONS_LIST)
+const updateTableOfContents = (): void => {
+  const START_ACTIONS_LIST: string = '<!-- START_ACTIONS_LIST -->'
+  const END_ACTIONS_LIST: string = '<!-- END_ACTIONS_LIST -->'
+  const tocReg: RegExp = new RegExp(START_ACTIONS_LIST + '[\\s\\S]+' + END_ACTIONS_LIST)
 
-  const readmePath = path.join(__dirname, '..', 'actions', 'README.md')
-  const list = Object.keys(actions).reduce((prev, dir) => `${prev}- [${dir}](./${dir})\n`, '')
-  const readme = fs.readFileSync(readmePath, 'utf8')
-  const newReadme = readme.replace(tocReg, `${START_ACTIONS_LIST}\n${list}\n${END_ACTIONS_LIST}`)
+  const readmePath: string = path.join(__dirname, '..', 'actions', 'README.md')
+  const list: string = Object.keys(actions).reduce((prev, dir) => `${prev}- [${dir}](./${dir})\n`, '')
+  const readme: string = fs.readFileSync(readmePath, 'utf8')
+  const newReadme: string = readme.replace(tocReg, `${START_ACTIONS_LIST}\n${list}\n${END_ACTIONS_LIST}`)
   return fs.writeFileSync(readmePath, newReadme)
 }
 
