@@ -15,7 +15,7 @@ This library contains all of the JavaScript-based bot actions that Learning Lab 
 
 The bot actions from the [latest release of this repository on the GitHub Package Registry](https://github.com/github/learning-lab-components/packages/11396) are used in production by GitHub Learning Lab within a Node.js environment.
 
-By making these bot actions available as an open source library, we hope to work with Learning Lab course authors to create the functionality that their courses need, and to improve the product together. You can [contribute](.github/CONTRIBUTING.md) in any of the following ways:
+Available bot actions allows cooperation with Learning Lab authors to develop functions courses while improving the product.You can [contribute](.github/CONTRIBUTING.md) in any of the following ways:
  - [reporting bugs](https://github.com/github/learning-lab-components/issues/new?labels=bug&template=bug_report.md) and collaborating on fixes for existing bot actions
  - [suggesting enhancements](https://github.com/github/learning-lab-components/issues/new?labels=enhancement&template=feature_request.md) for existing bot actions
  - [requesting](https://github.com/github/learning-lab-components/issues/new?labels=enhancement&template=feature_request.md) or [creating new bot actions](actions/README.md#adding-a-new-action)
