@@ -57,7 +57,7 @@
   "devDependencies": {
     "@hapi/joi": "^16.1.8",
     "enquirer": "^2.3.4",
-    "jest": "^25.2.1",
+    "jest": "^25.2.3",
     "js-yaml": "^3.13.1",
     "lodash.isplainobject": "^4.0.6",
     "nock": "^12.0.3",
