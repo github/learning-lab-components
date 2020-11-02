@@ -62,7 +62,7 @@
     "lodash.isplainobject": "^4.0.6",
     "nock": "^13.0.4",
     "probot": "^7.5.3",
-    "standard": "^16.0.0"
+    "standard": "^16.0.1"
   },
   "standard": {
     "env": [
