@@ -117,6 +117,8 @@ module.exports = (payload, github) => {
   //
   context.fromFile = jest.fn().mockImplementation((name, data) => Promise.resolve(name))
   context.runActions = jest.fn()
+  context.course = {}
+  context.courseVersion = {}
 
   return context
 }

@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const jsYaml = require('js-yaml')
 
-const template = ({ key, description, rows, examples }) => `<!--
+const template = ({ key, description, options, examples }) => `<!--
   /!\\ WARNING /!\\
   This file's content is auto-generated, do NOT edit!
   All changes will be undone.
@@ -15,17 +15,23 @@ ${description}
 
 ${examples}
 
-## Options
+${options}
+`
+
+function renderOptionsTable (rows) {
+  if (!rows) return ''
+  return `## Options
 
 | Title | Property | Description | Default | Required |
 | :---- | :--- | :---------- | :------ | :------- |
-${rows}
-`
+${rows}`
+}
 
 /**
  * Convert a list of children properties into table rows.
  */
 function mapChildrenToRows (children) {
+  if (!children) return ''
   return Object.keys(children).reduce((prev, key) => {
     const opt = children[key]
     const cells = [
@@ -79,7 +85,7 @@ function generate (actionKey) {
     key: actionKey,
     title: (schema.metas && schema.metas[0] && schema.metas[0].label) || actionKey,
     description: schema.flags.description || '',
-    rows,
+    options: renderOptionsTable(rows),
     examples
   })
 }

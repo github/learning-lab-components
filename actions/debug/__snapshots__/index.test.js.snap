@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`debug sets the repo webhook for a draft course version 1`] = `
+Array [
+  Array [
+    Object {
+      "config": Object {
+        "content_type": "json",
+        "events": Array [
+          "push",
+          "issues",
+          "pull_request",
+          "issue_comment",
+        ],
+        "url": "https://smee.io/undefined-JasonEtco",
+      },
+      "name": "web",
+      "owner": "JasonEtco",
+      "repo": "example",
+    },
+  ],
+]
+`;

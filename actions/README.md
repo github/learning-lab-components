@@ -18,6 +18,7 @@ If you're interested in contributing to the evolution of these actions, we would
 - [createPullRequestComment](./createPullRequestComment)
 - [createReview](./createReview)
 - [createStatus](./createStatus)
+- [debug](./debug)
 - [deleteBranch](./deleteBranch)
 - [enablePages](./enablePages)
 - [findInTree](./findInTree)

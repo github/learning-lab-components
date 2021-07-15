@@ -12,6 +12,7 @@ Array [
   "createPullRequestComment",
   "createReview",
   "createStatus",
+  "debug",
   "deleteBranch",
   "enablePages",
   "findInTree",
